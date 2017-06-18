@@ -1,0 +1,328 @@
+<html>
+<head>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-100881141-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <script src="jquery-3.2.1.min.js"></script>
+  <script src="code.js" type="application/javascript"></script>
+</head>
+
+<body>
+  <h1 class="title">Dominions 4 Calculator - Beta version 0.2</h1>
+  <div class="about">Please send bugs and requests to <a href="mailto:andreas.winkler@winkit.se">Andreas Winkler aka Dedasen</a> - <a href="https://redd.it/6fwqhj">Reddit thread</a></div>
+  <div class="navigation flexbox">
+    <ul class="flexbox">
+      <li class="select">Choose calculator:</li>
+      <li id="meleetohit-link" class="links">Melee to hit</li>
+      <li id="missiletohit-link" class="links">Missile to hit</li>
+      <li id="spellfatigue-link" class="links">Spell fatigue</li>
+      <li id="spellpenetration-link" class="links">Spell penetration</li>
+      <li id="communion-link" class="links">Communion</li>
+      <li id="besiegingfortresses-link" class="links">Besieging fortresses</li>
+    </ul>
+  </div>
+
+  <div id="meleetohit" class="calculator-wrapper">
+    <h1>Melee to hit defender</h1>
+    <div class="card-wrapper">
+      <div class="card-column-wrapper">
+        <div class="card">
+          <h2>Attacker</h2>
+          <h3>Attack: <input id="attackattribute-1" maxlength="3" onchange="attackcalculation()" autofocus></input></h3>
+          <h3>Fatigue: <input id="attackfatigue-1" maxlength="3" onchange="attackcalculation()"></input></h3>
+        </div>
+      </div>
+      <div class="card-column-wrapper">
+        <div class="card">
+          <h2>Defender</h2>
+          <h3>Defense: <input id="defenseattribute-1" maxlength="3" onchange="attackcalculation()"></input></h3>
+          <h3>Fatigue: <input id="defensefatigue-1" maxlength="3" onchange="attackcalculation()"></input></h3>
+          <h3>Previous attacks: <input id="numberofattacks-1" maxlength="3" onchange="attackcalculation()"></input></h3>
+        </div>
+      </div>
+    </div>
+    <div class="line"></div>
+    <h1>Chance to hit defender</h1>
+    <div class="card-wrapper-result">
+      <div class="card-formula">
+        <h2>Formula</h2>
+        <h4>A = Attack attribute + DRN (2D6 open ended) - (Fatigue / 20)</h4>
+        <h4>B = Defense attribute + DRN (2D6 open ended) - (Fatigue / 10) - (Previous attacks * 2)</h4>
+        <h4>If A is higher than B then a hit is scored on B.</h4>
+      </div>
+      <div id="card-result-1" class="card-result">
+        <span id="chancetohit-1">-</span>
+      </div>
+      <div class="card-data">
+        <h2>Additional data</h2>
+        <h3>Base attack roll: <span id="attackroll-1">-</span></h3>
+        <h3>Base defense roll: <span id="defenseroll-1">-</span></h3>
+        <h3>Difference: <span id="difference-1">-</span></h3>
+      </div>
+    </div>
+  </div>
+
+  <div id="missiletohit" class="calculator-wrapper">
+    <h1>Missile to hit target</h1>
+    <div class="card-wrapper">
+      <div class="card-column-wrapper">
+        <div class="card">
+          <h2>Shooter</h2>
+          <h3>Size of target: <input id="size-2" maxlength="3" onchange="missilecalculation()"></input></h3>
+          <h3>Magic weapon: <input id="magicweapon-2" onchange="missilecalculation()" type="checkbox" class="cbox"></input></h3>
+        </div>
+      </div>
+      <div class="card-column-wrapper">
+        <div class="card">
+          <h2>Target</h2>
+          <h3>Parry: <input id="parry-2" maxlength="3" onchange="missilecalculation()"></input></h3>
+          <h3>Fatigue: <input id="fatigue-2" maxlength="3" onchange="missilecalculation()"></input></h3>
+        </div>
+      </div>
+    </div>
+    <div class="line"></div>
+    <h1>Chance to hit target</h1>
+    <div class="card-wrapper-result">
+      <div class="card-formula">
+        <h2>Formula</h2>
+        <h4>A = DRN + (Size points in square) + 2 if magic weapon</h4>
+        <h4>B = 2 + DRN + (Shield parry value x2) - (Fatigue / 20)</h4>
+        <h4>If A is higher than B then a hit is scored on B.</h4>
+      </div>
+      <div id="card-result-2" class="card-result">
+        <span id="chancetohit-2">-</span>
+      </div>
+      <div class="card-data">
+        <h2>Additional data</h2>
+        <h3>Base attack roll: <span id="attackroll-2">-</span></h3>
+        <h3>Base defense roll: <span id="defenseroll-2">-</span></h3>
+        <h3>Difference: <span id="difference-2">-</span></h3>
+      </div>
+    </div>
+  </div>
+
+  <div id="spellfatigue" class="calculator-wrapper">
+    <h1>Mage spell fatigue</h1>
+    <div class="card-wrapper">
+      <div class="card-column-wrapper">
+        <div class="card">
+          <h2>Spell</h2>
+          <h3>Fatigue cost: <input id="fatigue-3" maxlength="3" onchange="spellfatiguecalculation()"></input></h3>
+          <h3>Minimum skill: <input id="minimumskill-3" maxlength="3" onchange="spellfatiguecalculation()"></input></h3>
+        </div>
+      </div>
+      <div class="card-column-wrapper">
+        <div class="card">
+          <h2>Mage</h2>
+          <h3>Mage skill: <input id="mageskill-3" maxlength="3" onchange="spellfatiguecalculation()"></input></h3>
+          <h3>Encumbrance: <input id="encumbrance-3" maxlength="3" onchange="spellfatiguecalculation()"></input></h3>
+        </div>
+      </div>
+    </div>
+    <div class="line"></div>
+    <h1>Fatigue cost per casting:</h1>
+    <div class="card-wrapper-result">
+      <div class="card-formula">
+        <h2>Formula</h2>
+        <h4>A = 1 / (1 + (mage skill - minimum skill))</h4>
+        <h4>B = (Fatiguecost of spell * A) + Encumbrance on caster * 2</h4>
+        <h4>A is the discount modifier on the spell fatigue cost
+        <h4>B is the fatiguecost of casting the spell</h4>
+      </div>
+      <div id="card-result-3" class="card-result">
+        <span id="fatiguecost-3">-</span>
+      </div>
+      <div class="card-data">
+        <h2>Additional data</h2>
+        <h3>Fatigue discount modifier: <span id="fatiguediscount-3">-</span></h3>
+      </div>
+    </div>
+  </div>
+
+  <div id="spellpenetration" class="calculator-wrapper">
+    <h1>Spell penetration of target</h1>
+    <div class="card-wrapper">
+      <div class="card-column-wrapper">
+        <div class="card">
+          <h2>Caster</h2>
+          <h3>Additional skill in spell path: <input id="additionalskillinpath-4" maxlength="3" onchange="spellpenetrationcalculation()"></input></h3>
+          <h3>Additional penetration: <input id="additionalpenetration-4" maxlength="3" onchange="spellpenetrationcalculation()"></input></h3>
+        </div>
+      </div>
+      <div class="card-column-wrapper">
+        <div class="card">
+          <h2>Target</h2>
+          <h3>Magic resistance: <input id="magicresistance-4" maxlength="3" onchange="spellpenetrationcalculation()"></input></h3>
+          <h3>Skill in spell path: <input id="skillinspellpath-4" maxlength="3" onchange="spellpenetrationcalculation()"></input></h3>
+        </div>
+      </div>
+    </div>
+    <div class="line"></div>
+    <h1>Chance to penetrate target</h1>
+    <div class="card-wrapper-result">
+      <div class="card-formula">
+        <h2>Formula</h2>
+        <h4>A = 12<sup>1</sup> + DRN + (additional skill in spell path rounded up) / 2 + Additional penetration</h4>
+        <h4>B = Magic resistance + DRN + (skill in spell path) / 2</h4>
+        <h4>If A is higher than B then a penetration is scored on B.</h4>
+        <h4>1. Manual says 10 but actual testing points to 11 with the "winning ties" replaced with a +1 resulting in a total of 12. See this <a href="http://z7.invisionfree.com/Dom3mods/index.php?showtopic=3108&st=0">post</a>.
+      </div>
+      <div id="card-result-4" class="card-result">
+        <span id="chancetopenetrate-4">-</span>
+      </div>
+      <div class="card-data">
+        <h2>Additional data</h2>
+        <h3>Caster's penetration roll: <span id="casterpenetrationroll-4">-</span></h3>
+        <h3>Target's MR roll: <span id="targetsmrroll-4">-</span></h3>
+        <h3>Difference: <span id="difference-4">-</span></h3>
+      </div>
+    </div>
+  </div>
+
+  <div id="besiegingfortresses" class="calculator-wrapper">
+
+    <div class="card-wrapper-align">
+
+      <h1>Besieging fortresses</h1>
+      <div class="card card-defense">
+        <h2>Besieged fortress</h2>
+        <h3 class="input-long">Defense: <input id="fortressdefense-5" maxlength="5" onchange="siegefortresscalculation()"></input></h3>
+      </div>
+
+      <div class="card-wrapper">
+        <div class="card-column-wrapper">
+          <div id="siegingcardID_1" class="card siegingcard">
+            <h2>Sieging unit #1</h2>
+            <div class="card-category-wrapper">
+              <div class="card-category">
+                <h3>Strength: <input class="siegingunitstrength" maxlength="3" onchange="siegefortresscalculation()"></input></h3>
+                <h3 class="input-long">Number: <input class="siegingunitamount" maxlength="5" onchange="siegefortresscalculation()"></input></h3>
+              </div>
+              <div class="card-category">
+                <h3>Flying: <input class="siegingflyingunit" onchange="siegefortresscalculation()" type="checkbox" class="cbox"></input></h3>
+              </div>
+            </div>
+            <div class="button-wrapper">
+              <button class="siegingunit-add" onclick="addunit(1,this)">Add unit</button>
+              <button class="siegingunit-remove" disabled onclick="removeunit(1,1)">Remove unit</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-column-wrapper">
+          <div id="besiegingcardID_1" class="card besiegingcard">
+            <h2>Besieged unit #1</h2>
+            <div class="card-category-wrapper">
+              <div class="card-category">
+                <h3>Strength: <input class="besiegingunitstrength" maxlength="3" onchange="siegefortresscalculation()"></input></h3>
+                <h3 class="input-long">Number: <input class="besiegingunitamount" maxlength="5" onchange="siegefortresscalculation()"></input></h3>
+              </div>
+              <div class="card-category">
+                <h3>Flying: <input class="besiegingflyingunit" onchange="siegefortresscalculation()" type="checkbox" class="cbox"></input></h3>
+                <h3>Mindless: <input class="besiegingmindlessunit" onchange="siegefortresscalculation()" type="checkbox" class="cbox"></input></h3>
+              </div>
+            </div>
+            <div class="button-wrapper">
+              <button class="besiegingunit-add" onclick="addunit(2,this)">Add unit</button>
+              <button class="besiegingunit-remove" disabled onclick="removeunit(2,1)">Remove unit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card-wrapper-align">
+      <div class="fixed-block-wrapper">
+        <h1>Turns until breached</h1>
+        <div class="card-wrapper-result">
+          <div id="card-result-5" class="card-result card-align">
+            <span id="turnstobreach-5">Nothing to breach</span>
+          </div>
+          <div class="card-data card-align">
+            <h2>Additional data</h2>
+            <h3>Total reduction strength: <span id="totalreductionstrength-5">-</span></h3>
+            <h3>Total repair strength: <span id="totalrepairstrength-5">-</span></h3>
+            <h3>Difference: <span id="difference-5">-</span></h3>
+            <h3>Defense left next turn: <span id="defenseleft-5">-</span></h3>
+          </div>
+          <div class="card-formula card-align">
+            <h2>Formula</h2>
+            <h4>A = Unit strength squared (Flying units + 1) / 100</h4>
+            <h4>B = (Unit strength squared (Flying units + 1) / 100) * 0.1 if mindless</h4>
+            <h4>If A is higher than B then the difference is subracted of the fortress defense value</h4>
+            <h4>If B is higher than A then the difference is added to the fortress defense value</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="communion" class="calculator-wrapper">
+
+    <h1>Communion</h1>
+    <div class="card-wrapper">
+      <div class="card-column-wrapper">
+        <div class="card">
+          <h2>Spell</h2>
+          <h3>Fatigue cost: <input id="spell-fatigue-6" maxlength="3" onchange="communioncalculation()"></input></h3>
+          <h3>Spell level: <input id="spell-minimumskill-6" maxlength="3" onchange="communioncalculation()"></input></h3>
+          <h3>Magic scale: <input id="magic-scale-6" maxlength="3" onchange="communioncalculation()"></input></h3>
+        </div>
+      </div>
+      <div class="card-column-wrapper">
+        <div class="card">
+          <h2>Master</h2>
+          <h3>Skill level: <input id="master-skill-6" maxlength="3" onchange="communioncalculation()"></input></h3>
+          <h3>Encumbrance: <input id="master-encumbrance-6" maxlength="3" onchange="communioncalculation()"></input></h3>
+          <h3>Extra gems: <input id="extra-gems-6" maxlength="3" onchange="communioncalculation()"></input></h3>
+        </div>
+      </div>
+      <div class="card-column-wrapper">
+        <div class="card">
+          <h2>Slaves</h2>
+          <h3>Skill level: <input id="slaves-skill-6" maxlength="3" onchange="communioncalculation()"></input></h3>
+          <h3>Amount: <input id="slaves-amount-6" maxlength="3" onchange="communioncalculation()"></input></h3>
+        </div>
+      </div>
+    </div>
+    <div class="line"></div>
+    <h1>Fatigue cost per casting:</h1>
+    <div class="card-wrapper-result">
+      <div class="card-formula">
+        <h2>Formula</h2>
+        <h4>A = 1 / (1 + (mage skill - minimum skill))</h4>
+        <h4>B = (Fatiguecost of spell * A) + Encumbrance on caster * 2</h4>
+        <h4>A is the discount modifier on the spell fatigue cost
+        <h4>B is the fatiguecost of casting the spell</h4>
+      </div>
+      <div id="master-card-result-6" class="card-result">
+        <h2>Master</h2>
+        <span id="masterfatiguecost-6">-</span>
+      </div>
+      <div id="slaves-card-result-6" class="card-result">
+        <h2>Slaves</h2>
+        <span id="slavefatiguecost-6">-</span>
+      </div>
+      <div class="card-data">
+        <h2>Additional data</h2>
+        <h3>Communion skill boost: <span id="communion-skill-boost-6">-</span></h3>
+        <h3>Casting level: <span id="casting-level-6">-</span></h3>
+        <h3>Fatigue level: <span id="fatigue-level-6">-</span></h3>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

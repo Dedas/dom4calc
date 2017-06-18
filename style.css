@@ -1,0 +1,306 @@
+body {
+  font-family: 'Raleway', sans-serif;
+  margin: 0px;
+}
+
+button {
+  height: 30px;
+  width: 120px;
+}
+
+h1 {
+  cursor: default;
+  margin: 0px;
+}
+
+h2 {
+  cursor: default;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  justify-content: left;
+}
+
+li {
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 18px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+input {
+  width: 2em;
+  border: none;
+  border-bottom: 1px solid black;
+  font-size: 1em;
+  background-color: inherit;
+}
+
+input:focus {
+  outline: none;
+}
+
+.title {
+  margin: 20px;
+}
+
+.navigation {
+  width: 100%;
+  height: 50px;
+  border-top: solid black;
+  border-bottom: solid black;
+  background-color: LightSteelBlue;
+  align-items: center;
+}
+
+.links {
+  color: black;
+}
+
+.flexbox {
+  display: flex;
+}
+
+.select {
+  cursor: default;
+  margin-left: 20px;
+}
+
+.calculator-wrapper {
+  flex-direction: column;
+  justify-content: space-around;
+  display: none;
+  margin-top: 2em;
+}
+
+.calculator-wrapper h1 {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.calculator-wrapper h2 {
+  margin: 0px;
+  text-transform: uppercase;
+}
+
+.calculator-wrapper h3 {
+  margin: 0px;
+  text-transform: uppercase;
+}
+
+.calculator-wrapper h4 {
+  margin: 0px;
+}
+
+.card-wrapper {
+  flex-direction: row;
+  justify-content: center;
+  display: flex;
+}
+
+.card-wrapper-result {
+  justify-content: center;
+  display: flex;
+}
+
+.card-column-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+}
+
+.card {
+  margin: 25px;
+  padding: 5px 20px 20px 20px;
+  border: solid black;
+  width: auto;
+  line-height: 250%;
+  background-color: Moccasin;
+}
+
+.card h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.card-category-wrapper {
+  display: flex;
+}
+
+.card-category {
+  width: 50%;
+}
+
+.card-formula {
+  margin: 25px;
+  padding: 5px 20px 20px 20px;
+  border: solid black;
+  background-color: LightGrey ;
+  width: 25%;
+  line-height: 200%;
+}
+
+.card-formula h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.card-formula h4 {
+  font-size: 0.75em;
+}
+
+.card-result {
+  display: flex;
+  margin: 25px;
+  padding: 20px;
+  border: solid black;
+  width: 25%;
+  line-height: 200%;
+  text-align: center;
+  font-size: 2em;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-data {
+  margin: 25px;
+  padding: 5px 20px 20px 20px;
+  border: solid black;
+  background-color: DarkSeaGreen;
+  width: 25%;
+  line-height: 200%;
+}
+
+.card-data h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.input-long input {
+  width: 3em;
+}
+
+.button-wrapper {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.button-wrapper button {
+  margin-right: 10px;
+}
+
+.result-togglebutton {
+  position: fixed;
+  width: 180px;
+  height: 40px;
+  bottom: 0px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  border-top: solid black;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.card-wrapper-align:nth-child(1) {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card-wrapper-align:nth-child(2) {
+  width: 35%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fixed-block-wrapper {
+  width: 35%;
+  display: block;
+  position: absolute;
+  right: 0px;
+}
+
+.sticky {
+  display: block;
+  position: fixed;
+  top: 10px;
+  right: 0px;
+}
+
+
+#besiegingfortresses {
+  flex-direction: row;
+}
+
+#besiegingfortresses input[type=checkbox] {
+  margin: 0px;
+  width: auto;
+}
+
+#besiegingfortresses .card-wrapper {
+  width: 75%;
+}
+
+#besiegingfortresses .card-column-wrapper {
+  width: 50%;
+}
+
+#besiegingfortresses .card-defense {
+  width: 25%;
+}
+
+#besiegingfortresses .card-align {
+  width: 75%;
+}
+
+#besiegingfortresses .card-wrapper-result {
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+#communion .card-result {
+  display: block;
+  padding-top: 5px;
+  position: relative;
+}
+
+#communion .card-result h2 {
+  font-size: 0.75em;
+  line-height: normal;
+  margin: 0px;
+}
+
+#communion .card-result span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cbox {
+  width: auto;
+  height: auto;
+}
+
+.about {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin-top: 10px;
+  margin-right: 10px;
+  font-size: 12px;
+}
