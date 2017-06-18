@@ -16,7 +16,7 @@
 </head>
 
 <body>
-  <h1 class="title">Dominions 4 Calculator - Beta version 0.2</h1>
+  <h1 class="title">Dominions 4 Calculator - Beta version 0.3</h1>
   <div class="about">Please send bugs and requests to <a href="mailto:andreas.winkler@winkit.se">Andreas Winkler aka Dedasen</a> - <a href="https://redd.it/6fwqhj">Reddit thread</a></div>
   <div class="navigation flexbox">
     <ul class="flexbox">
@@ -128,7 +128,7 @@
       </div>
     </div>
     <div class="line"></div>
-    <h1>Fatigue cost per casting:</h1>
+    <h1>Fatigue cost per casting</h1>
     <div class="card-wrapper-result">
       <div class="card-formula">
         <h2>Formula</h2>
@@ -276,7 +276,6 @@
           <h2>Spell</h2>
           <h3>Fatigue cost: <input id="spell-fatigue-6" maxlength="3" onchange="communioncalculation()"></input></h3>
           <h3>Spell level: <input id="spell-minimumskill-6" maxlength="3" onchange="communioncalculation()"></input></h3>
-          <h3>Magic scale: <input id="magic-scale-6" maxlength="3" onchange="communioncalculation()"></input></h3>
         </div>
       </div>
       <div class="card-column-wrapper">
@@ -294,22 +293,26 @@
           <h3>Amount: <input id="slaves-amount-6" maxlength="3" onchange="communioncalculation()"></input></h3>
         </div>
       </div>
+      <div class="card-column-wrapper">
+        <div class="card">
+          <h2>Other</h2>
+          <h3>Magic scale: <input id="magic-scale-6" maxlength="3" onchange="communioncalculation()"></input></h3>
+        </div>
+      </div>
     </div>
     <div class="line"></div>
-    <h1>Fatigue cost per casting:</h1>
+    <h1>Fatigue cost per casting</h1>
     <div class="card-wrapper-result">
       <div class="card-formula">
-        <h2>Formula</h2>
-        <h4>A = 1 / (1 + (mage skill - minimum skill))</h4>
-        <h4>B = (Fatiguecost of spell * A) + Encumbrance on caster * 2</h4>
-        <h4>A is the discount modifier on the spell fatigue cost
-        <h4>B is the fatiguecost of casting the spell</h4>
+        <h2>Info</h2>
+        <h4>Communion calculation formulas based on <a href="https://docs.google.com/spreadsheets/d/1OlzLT2bHI-Ldk5N8js4KoAPB1yof8G3FgXJEkaxNSoM/edit#gid=0">this document</a>.</h4>
+        <h4>More details will be added later.</h4>
       </div>
       <div id="master-card-result-6" class="card-result">
         <h2>Master</h2>
         <span id="masterfatiguecost-6">-</span>
       </div>
-      <div id="slaves-card-result-6" class="card-result">
+      <div id="slave-card-result-6" class="card-result">
         <h2>Slaves</h2>
         <span id="slavefatiguecost-6">-</span>
       </div>
@@ -318,6 +321,10 @@
         <h3>Communion skill boost: <span id="communion-skill-boost-6">-</span></h3>
         <h3>Casting level: <span id="casting-level-6">-</span></h3>
         <h3>Fatigue level: <span id="fatigue-level-6">-</span></h3>
+        <h3>Raw spell fatigue: <span id="raw-spell-fatigue-6">-</span></h3>
+        <h3>Slave multiplier: <span id="slave-multiplier-6">-</span></h3>
+        <h3>Sufficient skill to cast: <span id="sufficient-skill-to-cast-6">-</span></h3>
+        <h3>Sufficient skill to use gems: <span id="sufficient-skill-gems-6">-</span></h3>
       </div>
     </div>
 

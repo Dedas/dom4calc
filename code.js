@@ -44,27 +44,27 @@ $(document).ready(function(){
     //Links
     $("#meleetohit-link").click(function(){
       pagehandler("#meleetohit");
-      document.location.hash = "meleetohit";
+      window.history.pushState("","","#meleetohit");
     });
     $("#missiletohit-link").click(function(){
       pagehandler("#missiletohit");
-      document.location.hash = "missiletohit";
+      window.history.pushState("","","#missiletohit");
     });
     $("#spellfatigue-link").click(function(){
       pagehandler("#spellfatigue");
-      document.location.hash = "spellfatigue";
+      window.history.pushState("","","#spellfatigue");
     });
     $("#spellpenetration-link").click(function(){
       pagehandler("#spellpenetration");
-      document.location.hash = "spellpenetration";
+      window.history.pushState("","","#spellpenetration");
     });
     $("#communion-link").click(function(){
       pagehandler("#communion");
-      document.location.hash = "communion";
+      window.history.pushState("","","#communion");
     });
     $("#besiegingfortresses-link").click(function(){
       pagehandler("#besiegingfortresses");
-      document.location.hash = "besiegingfortresses";
+      window.history.pushState("","","#besiegingfortresses");
       besiegingsticky();
     });
 });
@@ -218,24 +218,24 @@ function spellpenetrationcalculation() {
 
 function siegefortresscalculation() {
 
-  var siegingunitstrength = 0;
-  var siegingflyingunit = 0;
-  var siegingunitamount = 0;
+  var siegingunitstrength;
+  var siegingflyingunit;
+  var siegingunitamount;
 
-  var besiegingunitstrength = 0;
-  var besiegingflyingunit = 0;
-  var besiegingunitamount = 0;
-  var besiegingmindlessunit = 0;
+  var besiegingunitstrength;
+  var besiegingflyingunit;
+  var besiegingunitamount;
+  var besiegingmindlessunit;
 
-  var totalreductionstrength = 0;
-  var totalrepairstrength = 0;
+  var totalreductionstrength;
+  var totalrepairstrength;
 
   var reductionstrengthArray = [];
   var repairstrengthArray = [];
 
-  var fortressdefense = 0;
+  var fortressdefense;
 
-  var difference = 0;
+  var difference;
 
   var x = 0;
   var y = 0;
@@ -463,9 +463,160 @@ function communioncalculation() {
   var slavesskill = $("#slaves-skill-6").val();
   var slavesamount = $("#slaves-amount-6").val();
 
-  //intermediate values
+  var communionskillboost;
+  var castinglevel;
+  var fatiguelevel;
+  var rawspellfatigue;
+  var slavemultiplier;
+
+  //boolean
+  var sufficientskillgems;
+  var sufficientskilltocast;
+
+  var mastersfatigue;
+  var slavefatigue;
+
+  //INTERMEDIATE VALUES
+
+  //communion skill boost
   if (slavesamount > 0) {
-      var communionskillboost = console.log(Math.floor(Math.log2(slavesamount)));
+    communionskillboost = Math.floor(Math.log2(slavesamount));
+  } else {
+    communionskillboost = 0;
   }
+
+  //Casting level
+  castinglevel = communionskillboost + (+ masterskill) + (+ Math.min(1, extragems));
+
+  //Fatigue level
+  fatiguelevel = (+ masterskill) + (+ communionskillboost) + (+ extragems);
+
+  //Raw spell fatiguelevel
+  rawspellfatigue = ((spellfatigue / (Math.max(0, (fatiguelevel - spellminimumskill + 1))) * (1 - (0.1 * magicscale)) + (+ masterencumbrance)) / (+ slavesamount + 1));
+
+  //Sufficient skill to use gems
+  if ((Math.floor(spellfatigue / 100) + (+ extragems) <= masterskill) || (Math.floor(spellfatigue / 100) + (+ extragems) <= (masterskill + (+ communionskillboost)) && extragems == 0)) {
+    sufficientskillgems = true;
+  } else {
+    sufficientskillgems = false;
+  }
+
+  //Sufficient skill to cast spell
+  if ((castinglevel >= spellminimumskill) && sufficientskillgems) {
+    sufficientskilltocast = true;
+  } else {
+    sufficientskilltocast = false;
+  }
+
+  //slave multiplier
+  if ((slavesskill * 2) < masterskill) {
+    slavemultiplier = 4;
+  }
+  else if (slavesskill < masterskill) {
+    slavemultiplier = 2;
+  }
+  else if (slavesskill == masterskill) {
+    slavemultiplier = 1;
+  } else {
+    slavemultiplier = 0.5;
+  }
+
+  //RESULTS
+
+  //master fatigue
+  if (sufficientskilltocast) {
+    mastersfatigue = Math.max(1, Math.floor(rawspellfatigue));
+  } else {
+    mastersfatigue = "Insufficient level";
+  }
+
+  //slave fatigue
+  if (slavesamount > 0) {
+    slavefatigue = Math.floor(mastersfatigue * slavemultiplier);
+  } else {
+    slavefatigue = "-";
+    slavemultiplier = "-";
+  }
+
+  //OUTPUT
+
+  //additional data
+  $("#communion-skill-boost-6").html(communionskillboost);
+  $("#casting-level-6").html(castinglevel);
+  $("#fatigue-level-6").html(fatiguelevel);
+
+  $("#slave-multiplier-6").html(slavemultiplier);
+
+  if (isFinite(rawspellfatigue)) {
+    $("#raw-spell-fatigue-6").html(rounddec(rawspellfatigue, 2));
+  } else {
+    $("#raw-spell-fatigue-6").html("-");
+  }
+
+  if (sufficientskilltocast) {
+    $("#sufficient-skill-to-cast-6").html("Yes");
+  } else {
+    $("#sufficient-skill-to-cast-6").html("No");
+  }
+
+  if (sufficientskillgems) {
+    $("#sufficient-skill-gems-6").html("Yes");
+  } else {
+    $("#sufficient-skill-gems-6").html("No");
+  }
+
+  //master
+  if (sufficientskilltocast == true) {
+    if (mastersfatigue > 0 && mastersfatigue <= 100) {
+      $("#masterfatiguecost-6").html(mastersfatigue);
+      cardcolor("#master-card-result-6",0,255,0);
+    }
+    else if (mastersfatigue > 100 && mastersfatigue <= 200) {
+      $("#masterfatiguecost-6").html(mastersfatigue);
+      cardcolor("#master-card-result-6",100,149,237);
+    }
+    else if (mastersfatigue > 200) {
+      $("#masterfatiguecost-6").html(mastersfatigue);
+      cardcolor("#master-card-result-6",255,0,0);
+    } else {
+      $("#mastersfatiguecost-6").html("-");
+      cardcolor("#master-card-result-6",255,255,255);
+    }
+  } else {
+    $("#masterfatiguecost-6").html(mastersfatigue);
+    cardcolor("#master-card-result-6",255,0,0);
+  }
+
+  //slaves
+  if (sufficientskilltocast == true) {
+    if (slavefatigue > 0 && slavefatigue <= 100) {
+      $("#slavefatiguecost-6").html(slavefatigue);
+      cardcolor("#slave-card-result-6",0,255,0);
+    }
+    else if (slavefatigue > 100 && slavefatigue <= 200) {
+      $("#slavefatiguecost-6").html(slavefatigue);
+      cardcolor("#slave-card-result-6",100,149,237);
+    }
+    else if (slavefatigue > 200) {
+      $("#slavefatiguecost-6").html(slavefatigue);
+      cardcolor("#slave-card-result-6",255,0,0);
+    } else {
+      $("#slavefatiguecost-6").html("-");
+      cardcolor("#slave-card-result-6",255,255,255);
+    }
+  } else {
+    $("#slavefatiguecost-6").html("-");
+    cardcolor("#slave-card-result-6",255,255,255);
+  }
+
+  //Checking for required inputs for master
+  var requiredinputs = ["#spell-fatigue-6", "#spell-minimumskill-6", "#master-skill-6"];
+
+  requiredinputs.forEach(function(value) {
+    if ($(value).val().length === 0) {
+      $("#masterfatiguecost-6").html("-");
+      cardcolor("#master-card-result-6",255,255,255);
+    }
+  });
 
 }
