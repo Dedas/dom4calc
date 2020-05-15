@@ -218,24 +218,24 @@ function spellpenetrationcalculation() {
 
 function siegefortresscalculation() {
 
-  var siegingunitstrength;
-  var siegingflyingunit;
-  var siegingunitamount;
+  var siegingunitstrength = 0;
+  var siegingflyingunit = 0;
+  var siegingunitamount = 0;
 
-  var besiegingunitstrength;
-  var besiegingflyingunit;
-  var besiegingunitamount;
-  var besiegingmindlessunit;
+  var besiegingunitstrength = 0;
+  var besiegingflyingunit = 0;
+  var besiegingunitamount = 0;
+  var besiegingmindlessunit = 0;
 
-  var totalreductionstrength;
-  var totalrepairstrength;
+  var totalreductionstrength = 0;
+  var totalrepairstrength = 0;
 
   var reductionstrengthArray = [];
   var repairstrengthArray = [];
 
-  var fortressdefense;
+  var fortressdefense = 0;
 
-  var difference;
+  var difference = 0;
 
   var x = 0;
   var y = 0;
